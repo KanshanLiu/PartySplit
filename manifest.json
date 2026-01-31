@@ -1,0 +1,16 @@
+
+{
+  "short_name": "PartySplit",
+  "name": "PartySplit Pro 智能结算",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2489/2489756.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#4f46e5",
+  "background_color": "#f8fafc"
+}
