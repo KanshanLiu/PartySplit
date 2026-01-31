@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { Participant, Expense, Settlement, Balance } from './types.ts';
-import { calculateBalances, calculateSettlements } from './utils/finance.ts';
+import { Participant, Expense } from './types';
+import { calculateBalances, calculateSettlements } from './utils/finance';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
 import html2canvas from 'html2canvas';
 
@@ -115,6 +115,7 @@ const App: React.FC = () => {
       link.click();
     } catch (err) {
       console.error('Export failed:', err);
+      alert('导出图片失败，请重试');
     } finally {
       setIsExporting(false);
     }
@@ -265,11 +266,12 @@ const App: React.FC = () => {
                         <span className="text-xs font-bold text-slate-600">{participants.find(p=>p.id===s.to)?.name}</span>
                       </div>
                     ))}
+                    {settlements.length === 0 && <p className="text-center text-slate-400 text-xs py-4">账目已平，无需转账</p>}
                   </div>
                 </div>
 
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
-                  <h4 className="font-bold text-slate-800 text-xs mb-6">收支分析</h4>
+                  <h4 className="font-bold text-slate-800 text-xs mb-6">支出占比</h4>
                   <div className="h-40">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
@@ -290,7 +292,7 @@ const App: React.FC = () => {
           <button 
             onClick={exportAsImage}
             disabled={isExporting || expenses.length === 0}
-            className={`w-full max-w-sm py-4 rounded-3xl font-black text-white shadow-2xl transition-all ${isExporting ? 'bg-slate-400' : 'bg-indigo-600 hover:bg-indigo-700'}`}
+            className={`w-full max-w-sm py-4 rounded-3xl font-black text-white shadow-2xl transition-all ${isExporting ? 'bg-slate-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 active:scale-95'}`}
           >
             {isExporting ? '正在生成图片...' : '导出结算单图片'}
           </button>
